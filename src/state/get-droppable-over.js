@@ -9,7 +9,7 @@ import type {
 } from '../types';
 import { toDroppableList } from './dimension-structures';
 import isPositionInFrame from './visibility/is-position-in-frame';
-import { closest, distance, patch } from './position';
+import { distance, patch } from './position';
 import isWithin from './is-within';
 
 // https://stackoverflow.com/questions/306316/determine-if-two-rectangles-overlap-each-other
@@ -28,7 +28,7 @@ type Args = {|
   draggable: DraggableDimension,
   droppables: DroppableDimensionMap,
   currentSelection: Position,
-  calculateDroppableUsingPointerPosition: boolean,
+  calculateDroppableUsingCursorPosition: boolean,
 |};
 
 type WithDistance = {|
@@ -44,73 +44,27 @@ type GetFurthestArgs = {|
 
 type GetClosestToCursorArgs = {|
   currentSelection: Position,
+  draggable: DraggableDimension,
   candidates: DroppableDimension[],
 |};
 
 function getClosestToCursor({
   currentSelection,
+  draggable,
   candidates,
-}: GetClosestToCursorArgs) {
+}) {
+
+  const startCenter = currentSelection;
   const sorted: WithDistance[] = candidates
     .map((candidate: DroppableDimension): WithDistance => {
-      const box = candidate.page.borderBox;
-      const isWithinX = isWithin(box.left, box.right)(currentSelection.x);
-      const isWithinY = isWithin(box.top, box.bottom)(currentSelection.y);
-      const result = (value: number): WithDistance => ({
+      return {
         id: candidate.descriptor.id,
-        distance: value,
-      });
-
-      // if the pointer is over the element then return 0
-      if (isWithinX && isWithinY) {
-        return result(0);
+        distance: distance(startCenter, candidate.page.borderBox.center)
       }
-
-      // if the pointer is within the X dimensions of the element then get the closest edge on Y axis
-      if (isWithinX) {
-        return result(
-          closest(patch('y', currentSelection.y), [
-            patch('y', box.top),
-            patch('y', box.bottom),
-          ]),
-        );
-      }
-
-      // if the pointer is within the Y dimensions of the element then get the closest edge on X axis
-      if (isWithinY) {
-        return result(
-          closest(patch('x', currentSelection.x), [
-            patch('x', box.left),
-            patch('x', box.right),
-          ]),
-        );
-      }
-
-      // if the pointer is not within the x or y values of the droppable then get the closest corner point
-      return result(
-        closest(currentSelection, [
-          {
-            x: box.left,
-            y: box.top,
-          },
-          {
-            x: box.right,
-            y: box.top,
-          },
-          {
-            x: box.right,
-            y: box.bottom,
-          },
-          {
-            x: box.left,
-            y: box.bottom,
-          },
-        ]),
-      );
     })
     .sort((a: WithDistance, b: WithDistance) => a.distance - b.distance);
 
-  return sorted[0] ? sorted[0].id : null;
+  return sorted[0]?.id ?? null;
 }
 
 function getFurthestAway({
@@ -154,7 +108,7 @@ export default function getDroppableOver({
   draggable,
   droppables,
   currentSelection,
-  calculateDroppableUsingPointerPosition,
+  calculateDroppableUsingCursorPosition,
 }: Args): ?DroppableId {
   // We know at this point that some overlap has to exist
   const candidates: DroppableDimension[] = toDroppableList(droppables).filter(
@@ -170,16 +124,9 @@ export default function getDroppableOver({
         return false;
       }
 
-      const hasOverlap = getHasOverlap(pageBorderBox, active);
       // Cannot be a candidate when dragging item is not over the droppable at all
-      if (!hasOverlap) {
+      if (!getHasOverlap(pageBorderBox, active)) {
         return false;
-      }
-
-      // 0. If drop target calculation is via pointer position then any overlap of elements
-      // counts as a candidate
-      if (hasOverlap && calculateDroppableUsingPointerPosition) {
-        return true;
       }
 
       // 1. Candidate if the center position is over a droppable
@@ -229,9 +176,10 @@ export default function getDroppableOver({
     return candidates[0].descriptor.id;
   }
 
-  if (calculateDroppableUsingPointerPosition) {
+  if(calculateDroppableUsingCursorPosition) {
     return getClosestToCursor({
       currentSelection,
+      draggable,
       candidates,
     });
   }

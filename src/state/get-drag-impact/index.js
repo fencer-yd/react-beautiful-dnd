@@ -28,7 +28,7 @@ type Args = {|
   viewport: Viewport,
   afterCritical: LiftEffect,
   currentSelection: Position,
-  calculateDroppableUsingPointerPosition: boolean,
+  calculateDroppableUsingCursorPosition: Boolean,
 |};
 
 export default ({
@@ -40,7 +40,7 @@ export default ({
   viewport,
   afterCritical,
   currentSelection,
-  calculateDroppableUsingPointerPosition,
+  calculateDroppableUsingCursorPosition,
 }: Args): DragImpact => {
   const pageBorderBox: Rect = offsetRectByPosition(
     draggable.page.borderBox,
@@ -52,7 +52,7 @@ export default ({
     currentSelection,
     draggable,
     droppables,
-    calculateDroppableUsingPointerPosition,
+    calculateDroppableUsingCursorPosition,
   });
 
   // not dragging over anything
