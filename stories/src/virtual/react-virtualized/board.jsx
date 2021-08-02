@@ -27,6 +27,7 @@ import { generateQuoteMap } from '../../data';
 import DropTargetCalculationModeSelector from '../../primatives/drop-target-calculation-mode-selector';
 import type { DropTargetCalculationMode } from '../../../../src/view/draggable/draggable-types';
 
+
 const Container = styled.div`
   display: flex;
 `;
@@ -38,10 +39,7 @@ type RowProps = {
 
 // Using a higher order function so that we can look up the quotes data to retrieve
 // our quote from within the rowRender function
-const getRowRender = (
-  quotes: Quote[],
-  dropTargetCalculationMode: DropTargetCalculationMode,
-) => ({ index, style }: RowProps) => {
+const getRowRender = (quotes: Quote[], dropTargetCalculationMode: DropTargetCalculationMode) => ({ index, style }: RowProps) => {
   const quote: ?Quote = quotes[index];
 
   // We are rendering an extra item for the placeholder
@@ -60,12 +58,7 @@ const getRowRender = (
   };
 
   return (
-    <Draggable
-      draggableId={quote.id}
-      index={index}
-      key={quote.id}
-      dropTargetCalculationMode={dropTargetCalculationMode}
-    >
+    <Draggable draggableId={quote.id} index={index} key={quote.id} dropTargetCalculationMode={dropTargetCalculationMode}>
       {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
         <QuoteItem
           provided={provided}
@@ -148,10 +141,7 @@ const Column = React.memo(function Column(props: ColumnProps) {
                 ),
                 transition: 'background-color 0.2s ease',
               }}
-              rowRenderer={getRowRender(
-                quotes,
-                props.dropTargetCalculationMode,
-              )}
+              rowRenderer={getRowRender(quotes, props.dropTargetCalculationMode)}
             />
           );
         }}
@@ -193,8 +183,8 @@ type Action =
       payload: QuoteMap,
     |}
   | {|
-      type: 'CHANGE_TARGET_MODE',
-      payload: DropTargetCalculationMode,
+    type: 'CHANGE_TARGET_MODE',
+    payload: DropTargetCalculationMode
     |};
 
 function reducer(state: State, action: Action) {
@@ -204,7 +194,6 @@ function reducer(state: State, action: Action) {
       itemCount: action.payload,
       quoteMap,
       columnKeys: getColumnKeys(quoteMap),
-      dropTargetCalculationMode: state.dropTargetCalculationMode,
     };
   }
   if (action.type === 'REORDER') {
@@ -212,7 +201,6 @@ function reducer(state: State, action: Action) {
       itemCount: state.itemCount,
       quoteMap: action.payload,
       columnKeys: getColumnKeys(action.payload),
-      dropTargetCalculationMode: state.dropTargetCalculationMode,
     };
   }
   if (action.type === 'CHANGE_TARGET_MODE') {
@@ -222,7 +210,7 @@ function reducer(state: State, action: Action) {
       // quoteMap: state.quoteMap,
       // columnKeys: state.columnKeys,
       dropTargetCalculationMode: action.payload,
-    };
+    }
   }
 
   return state;
@@ -265,14 +253,7 @@ function Board(props: Empty) {
           {state.columnKeys.map((key: string) => {
             const quotes: Quote[] = state.quoteMap[key];
 
-            return (
-              <Column
-                key={key}
-                quotes={quotes}
-                columnId={key}
-                dropTargetCalculationMode={state.dropTargetCalculationMode}
-              />
-            );
+            return <Column key={key} quotes={quotes} columnId={key} dropTargetCalculationMode={state.dropTargetCalculationMode}/>;
           })}
         </Container>
         <QuoteCountSlider
@@ -282,11 +263,7 @@ function Board(props: Empty) {
             dispatch({ type: 'CHANGE_COUNT', payload: count })
           }
         />
-        <DropTargetCalculationModeSelector
-          onChange={(payload) =>
-            dispatch({ type: 'CHANGE_TARGET_MODE', payload })
-          }
-        />
+        <DropTargetCalculationModeSelector onChange={(payload) => dispatch({ type: 'CHANGE_TARGET_MODE', payload })} />
       </DragDropContext>
       <Global
         styles={css`

@@ -6,7 +6,7 @@ import { Draggable } from '../../../src';
 import { grid, borderRadius } from '../constants';
 import type { DraggableProvided, DraggableStateSnapshot } from '../../../src';
 import type { Id, Task as TaskType } from '../types';
-import type { DropTargetCalculationMode } from '../../../src/view/draggable/draggable-types';
+import { DropTargetCalculationMode } from '../../../src/view/draggable/draggable-types';
 
 // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
 const primaryButton = 0;
@@ -196,11 +196,7 @@ export default class Task extends Component<Props> {
     const selectionCount: number = this.props.selectionCount;
     const isGhosting: boolean = this.props.isGhosting;
     return (
-      <Draggable
-        draggableId={task.id}
-        index={index}
-        dropTargetCalculationMode={this.props.dropTargetCalculationMode}
-      >
+      <Draggable draggableId={task.id} index={index} dropTargetCalculationMode={this.props.dropTargetCalculationMode}>
         {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => {
           const shouldShowSelection: boolean =
             snapshot.isDragging && selectionCount > 1;

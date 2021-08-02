@@ -4,12 +4,12 @@ import styled from '@emotion/styled';
 import memoizeOne from 'memoize-one';
 import { colors } from '@atlaskit/theme';
 import { Droppable } from '../../../src';
-import { grid, borderRadius } from '../constants';
+import { grid, borderRadius, dropTargetCalculationMode } from '../constants';
 import Task from './task';
 import type { DroppableProvided, DroppableStateSnapshot } from '../../../src';
 import type { Column as ColumnType } from './types';
 import type { Task as TaskType, Id } from '../types';
-import type { DropTargetCalculationMode } from '../../../src/view/draggable/draggable-types';
+import { DropTargetCalculationMode } from '../../../src/view/draggable/draggable-types';
 
 type Props = {|
   column: ColumnType,
@@ -87,9 +87,7 @@ export default class Column extends Component<Props> {
                 return (
                   <Task
                     task={task}
-                    dropTargetCalculationMode={
-                      this.props.dropTargetCalculationMode
-                    }
+                    dropTargetCalculationMode={this.props.dropTargetCalculationMode}
                     index={index}
                     key={task.id}
                     isSelected={isSelected}

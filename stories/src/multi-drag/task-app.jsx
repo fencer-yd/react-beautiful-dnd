@@ -11,7 +11,6 @@ import type { Task, Id } from '../types';
 import type { Entities } from './types';
 import { dropTargetCalculationMode } from '../constants';
 import DropTargetCalculationModeSelector from '../primatives/drop-target-calculation-mode-selector';
-import type { DropTargetCalculationMode } from '../../../src/view/draggable/draggable-types';
 
 const Container = styled.div`
   display: flex;
@@ -23,7 +22,6 @@ type State = {|
   selectedTaskIds: Id[],
   // sad times
   draggingTaskId: ?Id,
-  dropTargetCalculationMode: DropTargetCalculationMode,
 |};
 
 const getTasks = (entities: Entities, columnId: Id): Task[] =>
@@ -193,13 +191,9 @@ export default class TaskApp extends Component<*, State> {
     const selected: Id[] = this.state.selectedTaskIds;
     return (
       <>
-        <DropTargetCalculationModeSelector
-          onChange={(mode) =>
-            this.setState({
-              dropTargetCalculationMode: mode,
-            })
-          }
-        />
+        <DropTargetCalculationModeSelector onChange={ mode => this.setState({
+          dropTargetCalculationMode: mode,
+        }) } />
         <DragDropContext
           onDragStart={this.onDragStart}
           onDragEnd={this.onDragEnd}

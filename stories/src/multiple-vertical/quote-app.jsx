@@ -57,11 +57,9 @@ type Props = {|
   initial: QuoteMap,
 |};
 
-type State = $ReadOnly<
-  ReorderQuoteMapResult & {
-    dropTargetCalculationMode: DropTargetCalculationMode,
-  },
->;
+type State = ReorderQuoteMapResult & {
+  DropTargetCalculationMode: DropTargetCalculationMode,
+};
 
 export default class QuoteApp extends Component<Props, State> {
   /* eslint-disable react/sort-comp */
@@ -108,11 +106,7 @@ export default class QuoteApp extends Component<Props, State> {
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <DropTargetCalculationModeSelector
-          onChange={(dropTargetCalculationMode: DropTargetCalculationMode) =>
-            this.setState({ dropTargetCalculationMode })
-          }
-        />
+        <DropTargetCalculationModeSelector onChange={ (dropTargetCalculationMode: DropTargetCalculationMode) => this.setState({ dropTargetCalculationMode }) } />
         <Root>
           <HorizontalScrollContainer>
             <Column>
@@ -184,7 +178,7 @@ export default class QuoteApp extends Component<Props, State> {
                 listType="card"
                 isDropDisabled={disabledDroppable === 'eta'}
                 quotes={quoteMap.eta}
-                dropTargetCalculationMode={this.state.dropTargetCalculationMode}
+                dropTargetCalculationMode={this.state.dropTargetCalculationMode}              
               />
             </Column>
             <Column>
@@ -194,7 +188,7 @@ export default class QuoteApp extends Component<Props, State> {
                 listType="card"
                 isDropDisabled={disabledDroppable === 'theta'}
                 quotes={quoteMap.theta}
-                dropTargetCalculationMode={this.state.dropTargetCalculationMode}
+                dropTargetCalculationMode={this.state.dropTargetCalculationMode}              
               />
             </Column>
           </VerticalScrollContainer>
@@ -205,7 +199,7 @@ export default class QuoteApp extends Component<Props, State> {
               listType="card"
               isDropDisabled={disabledDroppable === 'iota'}
               quotes={quoteMap.iota}
-              dropTargetCalculationMode={this.state.dropTargetCalculationMode}
+              dropTargetCalculationMode={this.state.dropTargetCalculationMode}              
             />
           </Column>
           <Column>
@@ -216,7 +210,7 @@ export default class QuoteApp extends Component<Props, State> {
               internalScroll
               isDropDisabled={disabledDroppable === 'kappa'}
               quotes={quoteMap.kappa}
-              dropTargetCalculationMode={this.state.dropTargetCalculationMode}
+              dropTargetCalculationMode={this.state.dropTargetCalculationMode}              
             />
           </Column>
         </Root>

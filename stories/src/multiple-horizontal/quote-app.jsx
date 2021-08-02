@@ -27,11 +27,9 @@ type Props = {|
   initial: QuoteMap,
 |};
 
-type State = $ReadOnly<
-  ReorderQuoteMapResult & {
-    dropTargetCalculationMode: DropTargetCalculationMode,
-  },
->;
+type State = ReorderQuoteMapResult & {
+  dropTargetCalculationMode: DropTargetCalculationMode
+};
 
 export default class QuoteApp extends Component<Props, State> {
   /* eslint-disable react/sort-comp */
@@ -61,11 +59,7 @@ export default class QuoteApp extends Component<Props, State> {
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <DropTargetCalculationModeSelector
-          onChange={(dropTargetCalculationMode: DropTargetCalculationMode) =>
-            this.setState({ dropTargetCalculationMode })
-          }
-        />
+        <DropTargetCalculationModeSelector onChange={ (dropTargetCalculationMode: DropTargetCalculationMode) => this.setState({ dropTargetCalculationMode }) } />
         <Root>
           {Object.keys(quoteMap).map((key: string) => (
             <AuthorList
