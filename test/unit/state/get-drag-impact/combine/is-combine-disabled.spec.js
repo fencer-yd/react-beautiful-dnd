@@ -52,8 +52,7 @@ import { getOffsetForEndEdge } from '../util/get-offset-for-edge';
           previousImpact: homeImpact,
           viewport: preset.viewport,
           afterCritical,
-          calculateDroppableUsingPointerPosition: false,
-          currentSelection: { x: 0, y: 0 },
+          calculateDroppableUsingCursorPosition: false,
         });
 
         expect(impact).toEqual(homeImpact);
@@ -68,8 +67,6 @@ import { getOffsetForEndEdge } from '../util/get-offset-for-edge';
           previousImpact: homeImpact,
           viewport: preset.viewport,
           afterCritical,
-          calculateDroppableUsingPointerPosition: false,
-          currentSelection: { x: 0, y: 0 },
         });
 
         const expected: DragImpact = {

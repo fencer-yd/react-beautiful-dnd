@@ -127,8 +127,7 @@ import {
               previousImpact: whenEnteredForeign,
               viewport: preset.viewport,
               afterCritical,
-              calculateDroppableUsingPointerPosition: false,
-              currentSelection: { x: 0, y: 0 },
+              calculateDroppableUsingCursorPosition: false,
             });
             expect(impact).toEqual(whenEnteredForeign);
           }
@@ -142,8 +141,7 @@ import {
               previousImpact: whenEnteredForeign,
               viewport: preset.viewport,
               afterCritical,
-              calculateDroppableUsingPointerPosition: false,
-              currentSelection: { x: 0, y: 0 },
+              calculateDroppableUsingCursorPosition: false,
             });
             expect(impact).toEqual(combineWithDisplacedInForeign3);
           }
@@ -166,8 +164,7 @@ import {
               previousImpact: whenEnteredForeign,
               viewport: preset.viewport,
               afterCritical,
-              calculateDroppableUsingPointerPosition: false,
-              currentSelection: { x: 0, y: 0 },
+              calculateDroppableUsingCursorPosition: false,
             });
             expect(impact).toEqual(combineWithDisplacedInForeign3);
           }
@@ -180,8 +177,7 @@ import {
               previousImpact: whenEnteredForeign,
               viewport: preset.viewport,
               afterCritical,
-              calculateDroppableUsingPointerPosition: false,
-              currentSelection: { x: 0, y: 0 },
+              calculateDroppableUsingCursorPosition: false,
             });
 
             const expected: DragImpact = {
@@ -253,8 +249,7 @@ import {
             previousImpact: whenEnteredForeign,
             viewport: preset.viewport,
             afterCritical,
-            calculateDroppableUsingPointerPosition: false,
-            currentSelection: { x: 0, y: 0 },
+            calculateDroppableUsingCursorPosition: false,
           });
           expect(impact).toEqual(whenEnteredForeign);
         }
@@ -268,8 +263,7 @@ import {
             previousImpact: whenEnteredForeign,
             viewport: preset.viewport,
             afterCritical,
-            calculateDroppableUsingPointerPosition: false,
-            currentSelection: { x: 0, y: 0 },
+            calculateDroppableUsingCursorPosition: false,
           });
           expect(impact).toEqual(combineWithInForeign2);
         }
@@ -291,8 +285,7 @@ import {
             previousImpact: whenEnteredForeign,
             viewport: preset.viewport,
             afterCritical,
-            calculateDroppableUsingPointerPosition: false,
-            currentSelection: { x: 0, y: 0 },
+            calculateDroppableUsingCursorPosition: false,
           });
           expect(impact).toEqual(combineWithInForeign2);
         }
@@ -306,8 +299,7 @@ import {
             previousImpact: whenEnteredForeign,
             viewport: preset.viewport,
             afterCritical,
-            calculateDroppableUsingPointerPosition: false,
-            currentSelection: { x: 0, y: 0 },
+            calculateDroppableUsingCursorPosition: false,
           });
 
           const expected: DragImpact = {

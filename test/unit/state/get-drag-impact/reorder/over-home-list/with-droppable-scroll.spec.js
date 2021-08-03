@@ -68,8 +68,7 @@ const viewport: Viewport = getViewport();
           previousImpact: homeImpact,
           viewport,
           afterCritical,
-          calculateDroppableUsingPointerPosition: false,
-          currentSelection: { x: 0, y: 0 },
+          calculateDroppableUsingCursorPosition: false,
         });
 
         const expected: DragImpact = {
@@ -135,8 +134,7 @@ const viewport: Viewport = getViewport();
           previousImpact: homeImpact,
           viewport,
           afterCritical,
-          calculateDroppableUsingPointerPosition: false,
-          currentSelection: { x: 0, y: 0 },
+          calculateDroppableUsingCursorPosition: false,
         });
 
         const expected: DragImpact = {

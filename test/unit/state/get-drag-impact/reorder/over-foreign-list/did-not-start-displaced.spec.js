@@ -50,8 +50,7 @@ import {
       previousImpact: homeImpact,
       viewport,
       afterCritical,
-      calculateDroppableUsingPointerPosition: false,
-      currentSelection: { x: 0, y: 0 },
+      calculateDroppableUsingCursorPosition: false,
     });
 
     it('should displace items when moving backwards past their bottom edge', () => {
@@ -64,8 +63,7 @@ import {
           previousImpact: homeImpact,
           viewport,
           afterCritical,
-          calculateDroppableUsingPointerPosition: false,
-          currentSelection: { x: 0, y: 0 },
+          calculateDroppableUsingCursorPosition: false,
         });
 
         const expected: DragImpact = {
@@ -134,8 +132,7 @@ import {
           previousImpact: goingBackwards,
           viewport,
           afterCritical,
-          calculateDroppableUsingPointerPosition: false,
-          currentSelection: { x: 0, y: 0 },
+          calculateDroppableUsingCursorPosition: false,
         });
         expect(impact).toEqual(goingBackwards);
       }
@@ -149,8 +146,7 @@ import {
           previousImpact: goingBackwards,
           viewport,
           afterCritical,
-          calculateDroppableUsingPointerPosition: false,
-          currentSelection: { x: 0, y: 0 },
+          calculateDroppableUsingCursorPosition: false,
         });
 
         const expected: DragImpact = {
